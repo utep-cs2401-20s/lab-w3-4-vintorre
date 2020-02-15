@@ -22,10 +22,15 @@ public class gameOfLife{
 
     public gameOfLife(int[][] g){
         this.size = g.length;
-        int[][] previous = new int[size][size];
-        int[][] board = new int[size][size];
+        previous = new int[size][size];
+        board = new int[size][size];
 
-        this.previous= g;
+        for(int i = 0; i<this.board.length;i++){
+            for(int j =0; j<this.board[i].length;j++){
+                board[i][j] = g[i][j];
+
+            }
+        }
 
     }
 
@@ -34,24 +39,34 @@ public class gameOfLife{
     }
 
     public void oneStep(){
+
         for(int i = 0; i < this.board.length; i++){
             for(int j = 0; j < this.board[i].length; j++){
                 if(this.board[i][j]== 1){
                     if(neighbors(i, j) < 2)
-                        this.board[i][j]=0;
+                        this.previous[i][j]=0;
                     if(neighbors(i, j) == 2|| neighbors(i, j) ==3)
-                        this.board[i][j]=1;
+                        this.previous[i][j]=1;
                     if(neighbors(i,j) > 3 )
-                        this.board[i][j] =0;
+                        this.previous[i][j] =0;
                 }
                 if(this.board[i][j] == 0){
                     if(neighbors(i,j) == 3)
-                        this.board[i][j] = 1;
+                        this.previous[i][j] = 1;
                     else
-                        this.board[i][j] =0;
+                        this.previous[i][j] =0;
                 }
+
             }
         }
+
+        for(int a = 0; a<board.length; a++){
+            for(int b = 0; b<board[a].length; b++){
+                this.board[a][b] = this.previous[a][b];
+            }
+        }
+
+
     }
 
     public int neighbors(int r, int c){
@@ -111,7 +126,13 @@ public class gameOfLife{
     //gol.oneStep();
 
     public static void main(String[] args) {
-        System.out.print("hello");
+        int[][] test = {{0,0,0,0,0},{0,0,0,0,0},{0,1,1,1,0},{0,0,0,0,0},{0,0,0,0,0}};
+        int[][] test1 = {{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,1,1,1,0},{0,1,1,1,0,0},{0,0,0,0,0,0}};
+        int[][] test2 = {{0,0,0,0,0,0},{0,1,1,0,0,0},{0,1,1,0,0,0},{0,0,0,1,1,0,},{0,0,1,1,0,0},{0,0,0,0,0,0}};
+        int[][] test3 = {{0,0,0,0,0,1,0,0,0,0,0},{0,0,0,0,1,1,1,0,0,0,0},{0,0,0,1,0,1,0,1,0,0,0},{0,0,0,1,0,1,0,1,0,0,0},{0,0,0,0,1,1,1,0,0,0,0},{0,0,0,0,0,1,0,0,0,0,0}};
+
+
+
 
     }
 
